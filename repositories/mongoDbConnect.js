@@ -15,9 +15,10 @@ async function createCollections(name, db) {
 
 var users = ''
 var invoices = ''
+var features = ''
 var database = ''
 
-
+let feature = [{feature:'Admin'},{feature:'master',feature:'reports'}]
 async function client() {
     try {
         let client = new MongoClient(url)
@@ -32,6 +33,9 @@ async function client() {
         await createCollections('invoices', db)
         users = db.collection('users')
         invoices = db.collection('invoices')
+        features = db.collection('features')
+        // features.createIndex({feature:1},{unique:true})
+        await features.insertMany(feature,{ordered:false})
         return client
     }
     catch (err) {
@@ -41,5 +45,5 @@ async function client() {
 
 export default await client()
 export {
-    users, invoices, database
+    users, invoices, database,features
 }

@@ -50,7 +50,6 @@ export const findGeneric = async (req, res) => {
         }
         query.push(payload)
         let response = await collect.aggregate(query).toArray()
-        logger.log(response[0].totalCount[0].count)
         res.send({ data: response[0].totalData, count: response[0].totalCount[0].count })
     }
     catch (err) {
